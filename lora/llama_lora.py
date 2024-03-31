@@ -8,7 +8,7 @@ import torch, transformers
 from typing import List
 
 # For Llama
-from transformers import LlamaForCausalLM, LlamaTokenizer
+from transformers import LlamaForCausalLM, LlamaTokenizer, BitsAndBytesConfig
 
 # The LLM_Lora base class
 from .llm_lora import LLM_Lora
@@ -34,9 +34,13 @@ class Llama_Lora(LLM_Lora):
         if len(self.base_model) == 0:
             raise ValueError(f"The base_model is {self.base_model}")
         print(f"Load the pre-trained model: {self.base_model}")
+        bnb_config = BitsAndBytesConfig(
+            load_in_8bit=self.load_in_8bit
+        )
         self.model = LlamaForCausalLM.from_pretrained(
             self.base_model,
-            load_in_8bit=self.load_in_8bit,
+            quantization_config=bnb_config,
+            #load_in_8bit=self.load_in_8bit,
             torch_dtype=torch.float16,
             device_map="auto",
         )

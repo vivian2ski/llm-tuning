@@ -1,1 +1,6 @@
 *~
+*.out
+*.slurm
+test.*
+lora/__pycache__
+.at*

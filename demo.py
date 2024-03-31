@@ -8,16 +8,16 @@ def main(
         llm: str = "gemma",
         base_model: str = "google/gemma-7b-it",
 ):
-    # base_model_name: str = "meta-llama/Llama-2-7b-hf"
+    # base_model: str = "meta-llama/Llama-2-7b-hf"
     if len(base_model) == 0:
         raise ValueError("Please specify the base model.")
     if llm == "llama":
         m = Llama_Lora(
-            base_model=base_model,
+            base_model = "meta-llama/Llama-2-7b-hf",
         )
     elif llm == "gemma":
         m = Gemma_Lora(
-            base_model = base_model,
+            base_model = "google/gemma-7b-it",
         )
     else:
         raise ValueError(f"Unrecognized llm name: {llm}")
@@ -41,7 +41,7 @@ def main(
             verbose = True,
         )
     else:
-        raise ValueError(f"Unknown model name: {base_model_name}")
+        raise ValueError(f"Unknown model name: {base_model}")
 
 
 if __name__ == "__main__":
