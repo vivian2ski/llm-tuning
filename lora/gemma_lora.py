@@ -8,7 +8,7 @@ import torch, transformers
 from typing import List
 
 # The corresponding Transformer module
-from transformers import GemmaForCausalLM, GemmaTokenizer
+from transformers import GemmaForCausalLM, GemmaTokenizer, BitsAndBytesConfig
 
 # The LLM_Lora base class
 from .llm_lora import LLM_Lora
@@ -41,9 +41,13 @@ class Gemma_Lora(LLM_Lora):
             raise ValueError(f"Need to specify a Falcon pre-trained model -- the current base model is {self.base_model}")
         print(f"Load the pre-trained model: {self.base_model}")
         device_map = {"": int(os.environ.get("LOCAL_RANK") or 0)}
+        bnb_config = BitsAndBytesConfig(
+            load_in_8bit=self.load_in_8bit
+        )
         self.model = GemmaForCausalLM.from_pretrained(
             self.base_model,
-            load_in_8bit=self.load_in_8bit,
+            quantization_config=bnb_config,
+            #load_in_8bit=self.load_in_8bit,
             torch_dtype=torch.float16,
             device_map="auto",
         )
