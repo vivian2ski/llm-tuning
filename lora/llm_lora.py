@@ -126,7 +126,7 @@ class LLM_Lora(object):
         
         # ==========================================
         # Prepare the model for training
-        self.model = prepare_model_for_int8_training(self.model)
+        self.model = prepare_model_for_kbit_training(self.model)
         self.config = LoraConfig(
             r=lora_r,
             lora_alpha=lora_alpha,

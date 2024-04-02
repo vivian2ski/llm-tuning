@@ -4,3 +4,4 @@
 test.*
 lora/__pycache__
 .at*
+ckp*
