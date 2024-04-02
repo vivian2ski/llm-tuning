@@ -317,7 +317,8 @@ class LLM_Lora(object):
 
             # Construct a prompt
             res = self._eval(
-                instruction=item['instruction'],
+                instruction="Predict the sentiment label of the following input.  Answer either with 'positive' or 'negative'.",
+                #instruction=item['instruction'],
                 input=item['input'],
                 demos = demos,
                 max_new_tokens=max_new_tokens,
